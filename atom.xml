@@ -10,7 +10,7 @@
   <rights>All rights reserved 2026, MlX</rights>
   <subtitle>追风赶月莫停留，平芜尽处是春山</subtitle>
   <title>MlX的博客</title>
-  <updated>2026-04-19T14:58:22.922Z</updated>
+  <updated>2026-04-21T12:24:12.127Z</updated>
   <entry>
     <author>
       <name>MlX</name>
@@ -18,18 +18,18 @@
     <category term="hexo" scheme="http://example.com/categories/hexo/"/>
     <category term="hexo" scheme="http://example.com/tags/hexo/"/>
     <content>
-      <![CDATA[<p>记录一下hexo的数学公式不支持渲染多行显示的教程，特别详细，无脑修复：</p><blockquote><p><a href="https://blog.csdn.net/qq_27489877/article/details/140649135">butterfly主题插入数学公式LaTeX_hexo butterfly 公式-CSDN博客</a></p></blockquote>]]>
+      <![CDATA[<p>记录一下hexo的数学公式不支持渲染多行显示的解决方法，下面链接博主的教程，特别详细，无脑修复：</p><blockquote><p><a href="https://blog.csdn.net/qq_27489877/article/details/140649135">butterfly主题插入数学公式LaTeX_hexo butterfly 公式-CSDN博客</a></p></blockquote>]]>
     </content>
     <id>http://example.com/2026/04/19/hexo-butterfly%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F%E4%BF%AE%E5%A4%8D/</id>
     <link href="http://example.com/2026/04/19/hexo-butterfly%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F%E4%BF%AE%E5%A4%8D/"/>
     <published>2026-04-19T06:54:24.000Z</published>
     <summary>
-      <![CDATA[<p>记录一下hexo的数学公式不支持渲染多行显示的教程，特别详细，无脑修复：</p>
+      <![CDATA[<p>记录一下hexo的数学公式不支持渲染多行显示的解决方法，下面链接博主的教程，特别详细，无脑修复：</p>
 <blockquote>
-<p><a href="https://blog.csdn.net/qq_27489877/article/details/140649135">butterfly主]]>
+<p><a href="https://blog.csdn.net/qq_27489877/article/details/140649135]]>
     </summary>
-    <title>hexo-butterfly数学公式修复</title>
-    <updated>2026-04-19T14:58:22.922Z</updated>
+    <title>hexo-butterfly Latex修复</title>
+    <updated>2026-04-21T12:24:12.127Z</updated>
   </entry>
   <entry>
     <author>

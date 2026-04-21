@@ -1,0 +1,7 @@
+/* 调整主页副标题（打字机效果）的字体大小 */
+#site-subtitle {
+    font-size: 2.5rem;  /* 调整此值可放大缩小，例如 3rem */
+    font-weight: bold;   /* 加粗，可选 */
+    font-style: italic;
+}
+

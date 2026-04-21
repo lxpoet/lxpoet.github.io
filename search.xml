@@ -1,61 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search> 
-  
-  
-    
-    <entry>
-      <title>hexo-butterfly数学公式修复</title>
-      <link href="/2026/04/19/hexo-butterfly%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F%E4%BF%AE%E5%A4%8D/"/>
-      <url>/2026/04/19/hexo-butterfly%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F%E4%BF%AE%E5%A4%8D/</url>
-      
-        <content type="html"><![CDATA[<p>记录一下hexo的数学公式不支持渲染多行显示的教程，特别详细，无脑修复：</p><blockquote><p><a href="https://blog.csdn.net/qq_27489877/article/details/140649135">butterfly主题插入数学公式LaTeX_hexo butterfly 公式-CSDN博客</a></p></blockquote>]]></content>
-      
-      
+<search>
+  <entry>
+    <title>KMP算法：next数组的数学推导</title>
+    <url>/2026/04/19/KMP%E7%AE%97%E6%B3%95%EF%BC%9Anext%E6%95%B0%E7%BB%84%E7%9A%84%E6%95%B0%E5%AD%A6%E6%8E%A8%E5%AF%BC/</url>
+    <content><![CDATA[<blockquote>
+<p> <strong>前言</strong>：<br>由于找不到KMP算法对于next合理的推导解释，网上教程总有跳步骤或者没解释的问题，所以自己写的数学推导。本篇内容从零出发，只需要有一定递推思想，以及了解KMP算法的实现逻辑和next数组的基本定义即可看懂</p>
+</blockquote>
+<h1 id="KMP算法解释-amp-next数组的定义"><a href="#KMP算法解释-amp-next数组的定义" class="headerlink" title="KMP算法解释&amp;next数组的定义"></a>KMP算法解释&amp;next数组的定义</h1><h2 id="KMP算法"><a href="#KMP算法" class="headerlink" title="KMP算法"></a>KMP算法</h2><p>KMP算法的主要核心是模式串next数组值的计算，利用模式串对应的next数组值，避免了匹配不成功时不必要的回溯。所以我们要预先计算出next数组。</p>
+<h2 id="next数组的定义"><a href="#next数组的定义" class="headerlink" title="next数组的定义"></a>next数组的定义</h2><p>网上next数组的定义有很多，这导致它们的初始化各有不同，并且存在PM表和next数组混淆的情况。这里我们采用最简单的一种定义方式，并且不采用大多数next数组的初始化方式（<code>next[1] = 0</code> or <code>next[1] = -1</code>)，因为这些方式只是为了方便代码运行时不会陷入死循环所设计的，而不利于我们理解next数组的本质。下面给出next数组的定义：</p>
+<p>**在模式匹配下，模式串的第<code>i</code>个字符不匹配的情况下，应该跳转到第<code>next[i]</code>个字符进行重新匹配。</p>
+<p>由定义，我们可以得知当第1个字符不匹配时，应该将主串向后移一位，并重新开始匹配，则此时应该跳转到<code>next[1] = 1</code>，这是显然的，也是和网上解释不一样的地方，在实际代码中需要将其更改为任意一个不在next数组中的任意值即可，一般设为0或者-1。</p>
+<p>而对于如何确定<code>next[i]</code>跳转位置，我们通过匹配模式串的前后缀得出，而这也是为什么next数组会和PM表混淆的原因，因为PM表是由模式串前后缀的最大长度组成，我们可以得出对于PM的前后缀匹配长度的平移得到next数组应该跳转的位置。</p>
+<h2 id="next数组的计算程序"><a href="#next数组的计算程序" class="headerlink" title="next数组的计算程序"></a>next数组的计算程序</h2><p>我们给出next数组的实现代码，下述推导过程不同于通过形象的文本匹配动画来阐述代码逻辑，而是通过数学推导清晰指明程序为何如此设计。伪代码如下，注意其初始下标从1开始：<br><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">get_next</span><span class="params">(String T, <span class="type">int</span> next[])</span> </span>&#123;</span><br><span class="line">	<span class="type">int</span> i = <span class="number">1</span>, j = <span class="number">0</span>;</span><br><span class="line">	next[<span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span> (j &lt; T.length)&#123;</span><br><span class="line">		<span class="keyword">if</span>(j == <span class="number">0</span> || T.ch[i] == T.ch[j]) &#123;</span><br><span class="line">			i++;j++;</span><br><span class="line">			next[i] = j;</span><br><span class="line">		&#125; </span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			j = next[j];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="推导过程"><a href="#推导过程" class="headerlink" title="推导过程"></a>推导过程</h1><p>我们设模式串P = $t_1t_2\cdots t_{n-1}t_n$，下面我们通过枚举来找到next数组的规律</p>
+<h2 id="枚举规律"><a href="#枚举规律" class="headerlink" title="枚举规律"></a>枚举规律</h2><p>当 $i = 1$ 时，<code>next[1] = 1</code>,<br>当 $i = 2$ 时，<code>next[2] = 1</code>,这也显然，第2位不匹配时，只能跳转到第1位<br>当 $i = 3$ 时， 则有两种情况:</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">当t1 = t2时,我们应该跳转到第2位，即t2</span><br><span class="line">1  2  3  index</span><br><span class="line">s1 s2 s3</span><br><span class="line">t1 t2 t3 &lt;- t3 != s3 next[3] = 2</span><br><span class="line">   t1 t2 t3</span><br><span class="line">当t1 != t2时，则只能重新匹配，next[3] = 1</span><br></pre></td></tr></table></figure>
+<p>当 i = 4 时，有</p>
+<script type="math/tex; mode=display">
+\text{next}[4] = \begin{cases}
+3, & t_{1}t_{2} = t_{2}t_{3} \\
+2, &  t_{1} = t_{3} \\
+1, & 重新匹配
+\end{cases}</script><figure class="highlight text"><table><tr><td class="code"><pre><span class="line">当t1t2 = t2t3时,我们应该跳转到第3位，即t3</span><br><span class="line">1  2  3  4 index</span><br><span class="line">s1 s2 s3 s4 ……</span><br><span class="line">t1 t2 t3 t4 &lt;- t4 != s4 ,next[3] = </span><br><span class="line">   t1 t2 t3 t4 ……</span><br><span class="line">   ^  ^</span><br><span class="line">   t1 t2 = t2 t3 </span><br></pre></td></tr></table></figure>
+<p>则我们可以递推出 <code>next[i]</code> 的一般形式：</p>
+<script type="math/tex; mode=display">
+\text{next}[i] = \begin{cases}
+i-1, & t_{1}t_{2} \dots t_{i-3}t_{i-2} = t_{2}t_{3} \dots t_{i-2}t_{i-1} \\
+i-2, & t_{1}t_{2} \dots t_{i-4}t_{i-3} = t_{3}t_{4} \dots t_{i-2}t_{i-1} \\ 
+\, \vdots \\
+1, & 重新匹配
+\end{cases}</script><p>然后我们开始寻找 <code>next[i]</code> 的递推联系。</p>
+<h2 id="递推发现"><a href="#递推发现" class="headerlink" title="递推发现"></a>递推发现</h2><p>我们可以发现next数组的值和模式串的前后缀有一定联系，且前面next的值包含了前后缀的匹配信息。我们将<code>next[i-1]</code> 写出：</p>
+<script type="math/tex; mode=display">
+\text{next}[i-1] = \begin{cases}
+i-2, & t_{1}t_{2} \dots t_{i-4}t_{i-3} = t_{2}t_{3} \dots t_{i-3}t_{i-2} \\
+i-3, & t_{1}t_{2} \dots t_{i-5}t_{i-4} = t_{3}t_{4} \dots t_{i-3}t_{i-2} \\ 
+\, \vdots \\
+1, & 重新匹配
+\end{cases}</script><p>则我们可以设 <code>next[i-1] = j</code> ,由此可以得出$t_{1}t_{2}\dots t_{j-1} = t_{i-j+2}t_{i-j+3} \dots t_{i-3}t_{i-2}$ .</p>
+<blockquote>
+<p><strong>思路勘误</strong><br>然后我们可以发现在<code>next[i]</code>中必定能找到一个$t_{1}t_{2}\dots t_{j-1}$，但是其对应的后缀匹配为：$t_{i-j+3}t_{i-j+2} \dots t_{i-2}t_{i-1}$ ，其并不对应我们已知的<code>next[i] = j</code>:  $t_{i-j+2}t_{i-j+3} \dots t_{i-3}t_{i-2}$ 。故其不是我们要的递推关系。</p>
+</blockquote>
+<p>所以我们在<code>next[i]</code>找到 $t_{1}t_{2}\dots t_{j} = t_{i-j+2}t_{i-j+3} \dots t_{i-2}t_{i-1}$ ，其和已知的 $t_{1}t_{2}\dots t_{j-1} = t_{i-j+2}t_{i-j+3} \dots t_{i-3}t_{i-2}$ 一一对应，除了最后一位$t_{j}$ 和 $t_{i-1}$ 。所以我们每次仅需要判断是否 $t_{j} = t_{i-1}$ 即可。</p>
+<p>这也是为什么程序中判断语句 <code>T.ch[i] == T.ch[j]</code> ，我们每次的判断不用判断整个前后缀匹配，而是通过前面的next值即可推出。</p>
+<p>注意，我们的 i 和程序中下标不同的原因是程序设计是从前向后计算，所以每次匹配成功会进行<code>i++</code> 。而我们是通过 <code>next[i]</code> 从后向前推导，具体实现按程序逻辑即可。</p>
+<h2 id="t-j-和-t-i-1-情况分析"><a href="#t-j-和-t-i-1-情况分析" class="headerlink" title="$t_{j}$ 和 $t_{i-1}$  情况分析"></a>$t_{j}$ 和 $t_{i-1}$  情况分析</h2><h3 id="t-j-t-i-1-成立"><a href="#t-j-t-i-1-成立" class="headerlink" title="$t_{j} = t_{i-1}$ 成立"></a>$t_{j} = t_{i-1}$ 成立</h3><p>由于<code>next[i]</code> 和 <code>next[i-1] = j</code> 在对于前后缀匹配结果上差1，所以我们得出 <code>next[i] = next[i-1] + 1 = j + 1</code> ， 所以程序当中，我们对于匹配不成功时，先做<code>j = next[j]</code> ，如果$t_{j} = t_{i-1}$ 成立，我们进行 <code>j++</code> ，然后再赋值 <code>next[i]</code> 。</p>
+<p>下面我们就应该考虑当 $t_{j} = t_{i-1}$ 不成立时，为什么程序会反复执行 <code>j = next[j]</code> 来进行匹配。</p>
+<h3 id="t-j-t-i-1-不成立"><a href="#t-j-t-i-1-不成立" class="headerlink" title="$t_{j} = t_{i-1}$ 不成立"></a>$t_{j} = t_{i-1}$ 不成立</h3><p>事实上，我们只推导了 <code>next[i]</code> 和 <code>next[i-1]</code> 的情况，对于 i - 1 前面是否有可以匹配当前的后缀的前缀情况我们没有推导。而我们可以知道对于 <code>next[i-1] = j</code> ，其值为最大可以匹配的前缀情况，所以 i - 1 到 j 之间应该都没有可匹配的前缀。所以我们只需要判断 j 以前的情况，也就是推导 <code>next[j]</code> 是否有匹配的前缀。</p>
+<p>所以我们再设：<code>next[j] = k</code> , 即有 $t_{1}t_{2}\dots t_{k-1} = t_{j-k+1}t_{j-k+2} \dots t_{j-2}t_{j-1}$ .</p>
+<p>同理，<code>next[i]</code> 可以找到一个可能为：$t_{1}t_{2}\dots t_{k} = t_{i-k+1}t_{i-k+2} \dots t_{i-2}t_{i-1}$ .</p>
+<p>我们可以看到当前后缀的下标是不一致的，无法一一匹配。但是由于我们已经匹配过 <code>next[i-1] = j</code> ,并且 匹配到的 j 的前后缀长度显然大于 k 。所以可以得知 $t_{1}t_{2}\dots t_{j-1} = t_{i-j+2}t_{i-j+3} \dots t_{i-3}t_{i-2}$ . 故联立两式。我们可以得出 ：</p>
+<script type="math/tex; mode=display">t_{1}t_{2}\dots t_{k-1} = t_{j-k+1}t_{j-k+2} \dots t_{j-2}t_{j-1} = t_{j-k+1}t_{j-k+2} \dots t_{i-3}t_{i-2}</script><p>此时情况则和匹配 <code>next[i]</code> 的情况完全相同，我们只有 $t_{k} = t_{i-1}$ 是不清楚是否匹配的。故程序代码每次回重新赋值 <code>j = next[j]</code> , 然后判断 <code>T.ch[i] == T.ch[j]</code> 是否相等。</p>
+<h2 id="next初始值为-0-或-1-的解释"><a href="#next初始值为-0-或-1-的解释" class="headerlink" title="next初始值为 0 或 -1 的解释"></a>next初始值为 0 或 -1 的解释</h2><p>根据上面的递推，如果next数组无法匹配到任何一个值，则会退回到 第一位，而此时程序会一直在第一位上做死循环，故设初始值为0避免这个情况。而设置 -1 则是因为实际代码中下标从0开始，索引依旧有哈希冲突，故设置为-1。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>没啥可说的，下面是deepseek生成的总结：</p>
+<p>本文从KMP算法中next数组的本质定义出发，摒弃了工程实现中常见的“0或-1”初始化干扰，采用更直观的<code>next[1]=1</code>作为逻辑起点，系统推导了next数组的递推规律。通过枚举小规模情况、建立前后缀匹配的数学关系，并对比<code>next[i]</code>与<code>next[i-1]</code>的结构差异，清晰解释了代码中为何只需比较<code>t_j</code>与<code>t_&#123;i-1&#125;</code>，以及在失配时为何反复执行<code>j = next[j]</code>。最终，文章也说明了实际代码中将<code>next[1]</code>设为0或-1的原因——避免循环并适配下标从0开始的编程习惯。</p>
+]]></content>
       <categories>
-          
-          <category> hexo </category>
-          
+        <category>计算机</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> hexo </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>KMP算法：next数组的数学推导</title>
-      <link href="/2026/04/19/KMP%E7%AE%97%E6%B3%95%EF%BC%9Anext%E6%95%B0%E7%BB%84%E7%9A%84%E6%95%B0%E5%AD%A6%E6%8E%A8%E5%AF%BC/"/>
-      <url>/2026/04/19/KMP%E7%AE%97%E6%B3%95%EF%BC%9Anext%E6%95%B0%E7%BB%84%E7%9A%84%E6%95%B0%E5%AD%A6%E6%8E%A8%E5%AF%BC/</url>
-      
-        <content type="html"><![CDATA[<blockquote><p> <strong>前言</strong>：<br>由于找不到KMP算法对于next合理的推导解释，网上教程总有跳步骤或者没解释的问题，所以自己写的数学推导。本篇内容从零出发，只需要有一定递推思想，以及了解KMP算法的实现逻辑和next数组的基本定义即可看懂</p></blockquote><h1 id="KMP算法解释-amp-next数组的定义"><a href="#KMP算法解释-amp-next数组的定义" class="headerlink" title="KMP算法解释&amp;next数组的定义"></a>KMP算法解释&amp;next数组的定义</h1><h2 id="KMP算法"><a href="#KMP算法" class="headerlink" title="KMP算法"></a>KMP算法</h2><p>KMP算法的主要核心是模式串next数组值的计算，利用模式串对应的next数组值，避免了匹配不成功时不必要的回溯。所以我们要预先计算出next数组。</p><h2 id="next数组的定义"><a href="#next数组的定义" class="headerlink" title="next数组的定义"></a>next数组的定义</h2><p>网上next数组的定义有很多，这导致它们的初始化各有不同，并且存在PM表和next数组混淆的情况。这里我们采用最简单的一种定义方式，并且不采用大多数next数组的初始化方式（<code>next[1] = 0</code> or <code>next[1] = -1</code>)，因为这些方式只是为了方便代码运行时不会陷入死循环所设计的，而不利于我们理解next数组的本质。下面给出next数组的定义：</p><p>**在模式匹配下，模式串的第<code>i</code>个字符不匹配的情况下，应该跳转到第<code>next[i]</code>个字符进行重新匹配。</p><p>由定义，我们可以得知当第1个字符不匹配时，应该将主串向后移一位，并重新开始匹配，则此时应该跳转到<code>next[1] = 1</code>，这是显然的，也是和网上解释不一样的地方，在实际代码中需要将其更改为任意一个不在next数组中的任意值即可，一般设为0或者-1。</p><p>而对于如何确定<code>next[i]</code>跳转位置，我们通过匹配模式串的前后缀得出，而这也是为什么next数组会和PM表混淆的原因，因为PM表是由模式串前后缀的最大长度组成，我们可以得出对于PM的前后缀匹配长度的平移得到next数组应该跳转的位置。</p><h2 id="next数组的计算程序"><a href="#next数组的计算程序" class="headerlink" title="next数组的计算程序"></a>next数组的计算程序</h2><p>我们给出next数组的实现代码，下述推导过程不同于通过形象的文本匹配动画来阐述代码逻辑，而是通过数学推导清晰指明程序为何如此设计。伪代码如下，注意其初始下标从1开始：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">get_next</span><span class="params">(String T, <span class="type">int</span> next[])</span> </span>&#123;</span><br><span class="line"><span class="type">int</span> i = <span class="number">1</span>, j = <span class="number">0</span>;</span><br><span class="line">next[<span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">while</span> (j &lt; T.length)&#123;</span><br><span class="line"><span class="keyword">if</span>(j == <span class="number">0</span> || T.ch[i] == T.ch[j]) &#123;</span><br><span class="line">i++;j++;</span><br><span class="line">next[i] = j;</span><br><span class="line">&#125; </span><br><span class="line"><span class="keyword">else</span> &#123;</span><br><span class="line">j = next[j];</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><h1 id="推导过程"><a href="#推导过程" class="headerlink" title="推导过程"></a>推导过程</h1><p>我们设模式串P = $t_1t_2\cdots t_{n-1}t_n$，下面我们通过枚举来找到next数组的规律</p><h2 id="枚举规律"><a href="#枚举规律" class="headerlink" title="枚举规律"></a>枚举规律</h2><p>当 $i = 1$ 时，<code>next[1] = 1</code>,<br>当 $i = 2$ 时，<code>next[2] = 1</code>,这也显然，第2位不匹配时，只能跳转到第1位<br>当 $i = 3$ 时， 则有两种情况:</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">当t1 = t2时,我们应该跳转到第2位，即t2</span><br><span class="line">1  2  3  index</span><br><span class="line">s1 s2 s3</span><br><span class="line">t1 t2 t3 &lt;- t3 != s3 next[3] = 2</span><br><span class="line">   t1 t2 t3</span><br><span class="line">当t1 != t2时，则只能重新匹配，next[3] = 1</span><br></pre></td></tr></table></figure><p>当 i = 4 时，有</p><script type="math/tex; mode=display">\text{next}[4] = \begin{cases}3, & t_{1}t_{2} = t_{2}t_{3} \\2, &  t_{1} = t_{3} \\1, & 重新匹配\end{cases}</script><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">当t1t2 = t2t3时,我们应该跳转到第3位，即t3</span><br><span class="line">1  2  3  4 index</span><br><span class="line">s1 s2 s3 s4 ……</span><br><span class="line">t1 t2 t3 t4 &lt;- t4 != s4 ,next[3] = </span><br><span class="line">   t1 t2 t3 t4 ……</span><br><span class="line">   ^  ^</span><br><span class="line">   t1 t2 = t2 t3 </span><br></pre></td></tr></table></figure><p>则我们可以递推出 <code>next[i]</code> 的一般形式：</p><script type="math/tex; mode=display">\text{next}[i] = \begin{cases}i-1, & t_{1}t_{2} \dots t_{i-3}t_{i-2} = t_{2}t_{3} \dots t_{i-2}t_{i-1} \\i-2, & t_{1}t_{2} \dots t_{i-4}t_{i-3} = t_{3}t_{4} \dots t_{i-2}t_{i-1} \\ \, \vdots \\1, & 重新匹配\end{cases}</script><p>然后我们开始寻找 <code>next[i]</code> 的递推联系。</p><h2 id="递推发现"><a href="#递推发现" class="headerlink" title="递推发现"></a>递推发现</h2><p>我们可以发现next数组的值和模式串的前后缀有一定联系，且前面next的值包含了前后缀的匹配信息。我们将<code>next[i-1]</code> 写出：</p><script type="math/tex; mode=display">\text{next}[i-1] = \begin{cases}i-2, & t_{1}t_{2} \dots t_{i-4}t_{i-3} = t_{2}t_{3} \dots t_{i-3}t_{i-2} \\i-3, & t_{1}t_{2} \dots t_{i-5}t_{i-4} = t_{3}t_{4} \dots t_{i-3}t_{i-2} \\ \, \vdots \\1, & 重新匹配\end{cases}</script><p>则我们可以设 <code>next[i-1] = j</code> ,由此可以得出$t_{1}t_{2}\dots t_{j-1} = t_{i-j+2}t_{i-j+3} \dots t_{i-3}t_{i-2}$ .</p><blockquote><p><strong>思路勘误</strong><br>然后我们可以发现在<code>next[i]</code>中必定能找到一个$t_{1}t_{2}\dots t_{j-1}$，但是其对应的后缀匹配为：$t_{i-j+3}t_{i-j+2} \dots t_{i-2}t_{i-1}$ ，其并不对应我们已知的<code>next[i] = j</code>:  $t_{i-j+2}t_{i-j+3} \dots t_{i-3}t_{i-2}$ 。故其不是我们要的递推关系。</p></blockquote><p>所以我们在<code>next[i]</code>找到 $t_{1}t_{2}\dots t_{j} = t_{i-j+2}t_{i-j+3} \dots t_{i-2}t_{i-1}$ ，其和已知的 $t_{1}t_{2}\dots t_{j-1} = t_{i-j+2}t_{i-j+3} \dots t_{i-3}t_{i-2}$ 一一对应，除了最后一位$t_{j}$ 和 $t_{i-1}$ 。所以我们每次仅需要判断是否 $t_{j} = t_{i-1}$ 即可。</p><p>这也是为什么程序中判断语句 <code>T.ch[i] == T.ch[j]</code> ，我们每次的判断不用判断整个前后缀匹配，而是通过前面的next值即可推出。</p><p>注意，我们的 i 和程序中下标不同的原因是程序设计是从前向后计算，所以每次匹配成功会进行<code>i++</code> 。而我们是通过 <code>next[i]</code> 从后向前推导，具体实现按程序逻辑即可。</p><h2 id="t-j-和-t-i-1-情况分析"><a href="#t-j-和-t-i-1-情况分析" class="headerlink" title="$t_{j}$ 和 $t_{i-1}$  情况分析"></a>$t_{j}$ 和 $t_{i-1}$  情况分析</h2><h3 id="t-j-t-i-1-成立"><a href="#t-j-t-i-1-成立" class="headerlink" title="$t_{j} = t_{i-1}$ 成立"></a>$t_{j} = t_{i-1}$ 成立</h3><p>由于<code>next[i]</code> 和 <code>next[i-1] = j</code> 在对于前后缀匹配结果上差1，所以我们得出 <code>next[i] = next[i-1] + 1 = j + 1</code> ， 所以程序当中，我们对于匹配不成功时，先做<code>j = next[j]</code> ，如果$t_{j} = t_{i-1}$ 成立，我们进行 <code>j++</code> ，然后再赋值 <code>next[i]</code> 。</p><p>下面我们就应该考虑当 $t_{j} = t_{i-1}$ 不成立时，为什么程序会反复执行 <code>j = next[j]</code> 来进行匹配。</p><h3 id="t-j-t-i-1-不成立"><a href="#t-j-t-i-1-不成立" class="headerlink" title="$t_{j} = t_{i-1}$ 不成立"></a>$t_{j} = t_{i-1}$ 不成立</h3><p>事实上，我们只推导了 <code>next[i]</code> 和 <code>next[i-1]</code> 的情况，对于 i - 1 前面是否有可以匹配当前的后缀的前缀情况我们没有推导。而我们可以知道对于 <code>next[i-1] = j</code> ，其值为最大可以匹配的前缀情况，所以 i - 1 到 j 之间应该都没有可匹配的前缀。所以我们只需要判断 j 以前的情况，也就是推导 <code>next[j]</code> 是否有匹配的前缀。</p><p>所以我们再设：<code>next[j] = k</code> , 即有 $t_{1}t_{2}\dots t_{k-1} = t_{j-k+1}t_{j-k+2} \dots t_{j-2}t_{j-1}$ .</p><p>同理，<code>next[i]</code> 可以找到一个可能为：$t_{1}t_{2}\dots t_{k} = t_{i-k+1}t_{i-k+2} \dots t_{i-2}t_{i-1}$ .</p><p>我们可以看到当前后缀的下标是不一致的，无法一一匹配。但是由于我们已经匹配过 <code>next[i-1] = j</code> ,并且 匹配到的 j 的前后缀长度显然大于 k 。所以可以得知 $t_{1}t_{2}\dots t_{j-1} = t_{i-j+2}t_{i-j+3} \dots t_{i-3}t_{i-2}$ . 故联立两式。我们可以得出 ：</p><script type="math/tex; mode=display">t_{1}t_{2}\dots t_{k-1} = t_{j-k+1}t_{j-k+2} \dots t_{j-2}t_{j-1} = t_{j-k+1}t_{j-k+2} \dots t_{i-3}t_{i-2}</script><p>此时情况则和匹配 <code>next[i]</code> 的情况完全相同，我们只有 $t_{k} = t_{i-1}$ 是不清楚是否匹配的。故程序代码每次回重新赋值 <code>j = next[j]</code> , 然后判断 <code>T.ch[i] == T.ch[j]</code> 是否相等。</p><h2 id="next初始值为-0-或-1-的解释"><a href="#next初始值为-0-或-1-的解释" class="headerlink" title="next初始值为 0 或 -1 的解释"></a>next初始值为 0 或 -1 的解释</h2><p>根据上面的递推，如果next数组无法匹配到任何一个值，则会退回到 第一位，而此时程序会一直在第一位上做死循环，故设初始值为0避免这个情况。而设置 -1 则是因为实际代码中下标从0开始，索引依旧有哈希冲突，故设置为-1。</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>没啥可说的，下面是deepseek生成的总结：</p><p>本文从KMP算法中next数组的本质定义出发，摒弃了工程实现中常见的“0或-1”初始化干扰，采用更直观的<code>next[1]=1</code>作为逻辑起点，系统推导了next数组的递推规律。通过枚举小规模情况、建立前后缀匹配的数学关系，并对比<code>next[i]</code>与<code>next[i-1]</code>的结构差异，清晰解释了代码中为何只需比较<code>t_j</code>与<code>t_&#123;i-1&#125;</code>，以及在失配时为何反复执行<code>j = next[j]</code>。最终，文章也说明了实际代码中将<code>next[1]</code>设为0或-1的原因——避免循环并适配下标从0开始的编程习惯。</p>]]></content>
-      
-      
+      <tags>
+        <tag>kmp算法</tag>
+        <tag>计算机</tag>
+        <tag>数学</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo-butterfly Latex修复</title>
+    <url>/2026/04/19/hexo-butterfly%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F%E4%BF%AE%E5%A4%8D/</url>
+    <content><![CDATA[<p>记录一下hexo的数学公式不支持渲染多行显示的解决方法，下面链接博主的教程，特别详细，无脑修复：</p>
+<blockquote>
+<p><a href="https://blog.csdn.net/qq_27489877/article/details/140649135">butterfly主题插入数学公式LaTeX_hexo butterfly 公式-CSDN博客</a></p>
+</blockquote>
+]]></content>
       <categories>
-          
-          <category> 计算机 </category>
-          
+        <category>hexo</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> kmp算法 </tag>
-            
-            <tag> 计算机 </tag>
-            
-            <tag> 数学 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-  
-  
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
 </search>
