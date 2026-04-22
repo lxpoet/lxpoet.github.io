@@ -1,21 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>hexo-butterfly Latex修复</title>
-    <url>/2026/04/19/hexo-butterfly%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F%E4%BF%AE%E5%A4%8D/</url>
-    <content><![CDATA[<p>记录一下hexo的数学公式不支持渲染多行显示的解决方法，下面链接博主的教程，特别详细，无脑修复：</p>
-<blockquote>
-<p><a href="https://blog.csdn.net/qq_27489877/article/details/140649135">butterfly主题插入数学公式LaTeX_hexo butterfly 公式-CSDN博客</a></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>hexo</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>KMP算法：next数组的数学推导</title>
     <url>/2026/04/19/KMP%E7%AE%97%E6%B3%95%EF%BC%9Anext%E6%95%B0%E7%BB%84%E7%9A%84%E6%95%B0%E5%AD%A6%E6%8E%A8%E5%AF%BC/</url>
     <content><![CDATA[<blockquote>
@@ -77,6 +62,21 @@ i-3, & t_{1}t_{2} \dots t_{i-5}t_{i-4} = t_{3}t_{4} \dots t_{i-3}t_{i-2} \\
         <tag>kmp算法</tag>
         <tag>计算机</tag>
         <tag>数学</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo-butterfly Latex修复</title>
+    <url>/2026/04/19/hexo-butterfly%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F%E4%BF%AE%E5%A4%8D/</url>
+    <content><![CDATA[<p>记录一下hexo的数学公式不支持渲染多行显示的解决方法，下面链接博主的教程，特别详细，无脑修复：</p>
+<blockquote>
+<p><a href="https://blog.csdn.net/qq_27489877/article/details/140649135">butterfly主题插入数学公式LaTeX_hexo butterfly 公式-CSDN博客</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>hexo</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
       </tags>
   </entry>
 </search>
