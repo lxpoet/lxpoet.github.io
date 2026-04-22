@@ -1,7 +1,82 @@
 /* 调整主页副标题（打字机效果）的字体大小 */
 #site-subtitle {
-    font-size: 2.5rem;  /* 调整此值可放大缩小，例如 3rem */
+    font-size: 3rem;  /* 调整此值可放大缩小，例如 3rem */
     font-weight: bold;   /* 加粗，可选 */
     font-style: italic;
 }
 
+/*所有页面实现毛玻璃特效*/
+
+#aside-content,
+#search-mask,
+/* 手机端 */
+#sidebar #menu-mask {
+  background: rgba(255, 255, 255, 0);
+}
+
+.search-dialog {
+  border-radius: 0px;
+}
+
+/* 浅色模式 */
+html[data-theme="light"] #aside-content>.card-widget:first-child,
+html[data-theme="light"] #aside-content .card-widget,
+html[data-theme="light"] .layout>div:first-child:not(.recent-posts),
+html[data-theme="light"] #recent-posts>.recent-post-item,
+/* 标题栏 */
+html[data-theme="light"] #page-header.nav-visible #nav,
+/* 搜索框 */
+html[data-theme="light"] .search-dialog,
+/* 移动端 */
+html[data-theme="light"] #sidebar #sidebar-menus.open {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+}
+
+/* 深色模式 */
+html[data-theme="dark"] #aside-content>.card-widget:first-child,
+html[data-theme="dark"] #aside-content .card-widget,
+html[data-theme="dark"] .layout>div:first-child:not(.recent-posts),
+html[data-theme="dark"] #recent-posts>.recent-post-item,
+/* 标题栏 */
+html[data-theme="dark"] #page-header.nav-visible #nav,
+/* 搜索框 */
+html[data-theme="dark"] .search-dialog,
+/* 移动端 */
+html[data-theme="dark"] #sidebar #sidebar-menus.open {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(20px);
+}
+
+footer {
+  background: transparent !important;
+}
+.footer-wrap {
+  background: transparent !important;
+}
+
+/* 日间模式背景图 */
+html:not([data-theme='dark']) body {
+  background: url('/images/index_light.jpeg') no-repeat center center fixed !important;
+  background-size: cover !important;
+}
+
+/* 夜间模式背景图 */
+html[data-theme='dark'] body {
+  background: url('/images/index_dark.png') no-repeat center center fixed !important;
+  background-size: cover !important;
+}
+
+.footer-copyright{
+    color: #2B4B40;
+    font-weight: normal;
+    /* 斜体 */
+    font-style: italic;
+}
+
+.footer_custom_text {
+    color: #2B4B40;
+    font-weight: bold;
+    /* 斜体 */
+    font-style: italic;
+}
