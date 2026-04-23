@@ -1742,7 +1742,7 @@ body {
   background: var(--global-bg);
   color: var(--font-color);
   font-size: var(--global-font-size);
-  font-family: var(--global-font), 'HarmonyOS Sans SC', Consolas_1, -apple-system, 'Quicksand', 'Nimbus Roman No9 L', 'PingFang SC', 'Hiragino Sans GB', 'Noto Serif SC', 'Microsoft Yahei', 'WenQuanYi Micro Hei', 'ST Heiti', sans-serif;;
+  font-family: HarmonyOS Sans SC;
   line-height: 2;
   -webkit-tap-highlight-color: rgba(0,0,0,0);
   scroll-behavior: smooth;
@@ -1871,7 +1871,7 @@ a:hover {
 .site-name,
 #aside-content .author-info-name,
 #aside-content .author-info-description {
-  font-family: var(--global-font), 'HarmonyOS Sans SC', 'Microsoft YaHei', 'PingFang SC', 'Hiragino Sans GB', 'Noto Serif SC', 'WenQuanYi Micro Hei', 'ST Heiti', sans-serif;
+  font-family: NanoOldSong-A;
 }
 .text-center {
   text-align: center;
@@ -2046,7 +2046,7 @@ figure.highlight pre .javascript .function {
 .container pre,
 .container code {
   font-size: 14px;
-  font-family: Consolas_1, var(--global-font), "Microsoft YaHei", Menlo, "PingFang SC", "Microsoft JhengHei", sans-serif !important;
+  font-family: consolas, Menlo, monospace, 'PingFang SC', 'Microsoft YaHei', sans-serif !important;
   border-radius: 6px;
 }
 .container code {
