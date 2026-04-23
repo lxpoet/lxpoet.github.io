@@ -5,22 +5,69 @@
     font-style: italic;
 }
 
-/*代码框 字体设置*/
-#article-container pre {
-	padding: 1px 3px;
-	margin: 0 3px;
-	font-family: 'Fira Code', monospace !important;
+/* ===========================
+   日间/夜间背景图淡入淡出效果
+   =========================== */
+
+/* 背景图双层容器 - 由 JS 动态创建 */
+.bg-layer {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  background-size: cover !important;
+  background-attachment: fixed !important;
+  z-index: -1 !important;
+  transition: opacity 1.2s ease-in-out !important;  /* 增加到 1.2秒，效果更明显 */
+  pointer-events: none !important;
 }
 
-/*代码框 字体设置*/
-#article-container pre {
-	padding: 1px 3px;
-	margin: 0 3px;
-	font-family: 'Fira Code', monospace !important;
+/* 亮色层 - 默认显示 */
+#bg-layer-light {
+  opacity: 1 !important;
 }
 
+/* 暗色层 - 默认隐藏 */
+#bg-layer-dark {
+  opacity: 0 !important;
+}
 
-/*所有页面实现毛玻璃特效*/
+/* 切换到暗色模式时的效果 */
+html[data-theme='dark'] #bg-layer-light {
+  opacity: 0 !important;
+}
+
+html[data-theme='dark'] #bg-layer-dark {
+  opacity: 1 !important;
+}
+
+/* 确保 body 和 html 背景透明 */
+body,
+html {
+  background: transparent !important;
+}
+
+/* 移除原有的背景图设置，避免冲突 */
+#web_bg {
+  display: none !important;
+}
+
+/* 日间模式背景图 */
+html:not([data-theme='dark']) body {
+  background: transparent !important;
+}
+
+/* 夜间模式背景图 */
+html[data-theme='dark'] body {
+  background: transparent !important;
+}
+
+/* ===========================
+   所有页面实现毛玻璃特效
+   =========================== */
 
 #aside-content,
 #search-mask,
@@ -69,21 +116,6 @@ footer {
 .footer-wrap {
   background: transparent !important;
 }
-
-
-/* 日间模式背景图 */
-html:not([data-theme='dark']) body {
-  background: url('/images/index_light.jpeg') no-repeat center center fixed !important;
-  background-size: cover !important;
-}
-
-/* 夜间模式背景图 */
-html[data-theme='dark'] body {
-  background: url('/images/index_dark.png') no-repeat center center fixed !important;
-  background-size: cover !important;
-}
-
-
 
 .footer-copyright{
     color: #2B4B40;
