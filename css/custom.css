@@ -55,6 +55,35 @@ footer {
   background: transparent !important;
 }
 
+/* 夜间模式背景层（下层） */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('/images/night.jpg') no-repeat center center fixed;
+  background-size: cover;
+  z-index: -2;
+}
+
+/* 日间模式背景层（上层，默认可见） */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('/images/day.jpg') no-repeat center center fixed;
+  background-size: cover;
+  z-index: -1;
+  transition: opacity 0.5s ease;
+}
+
+
+
 /* 日间模式背景图 */
 html:not([data-theme='dark']) body {
   background: url('/images/index_light.jpeg') no-repeat center center fixed !important;
@@ -66,6 +95,19 @@ html[data-theme='dark'] body {
   background: url('/images/index_dark.png') no-repeat center center fixed !important;
   background-size: cover !important;
 }
+
+/* 日间模式：上层显示日间背景，夜间层被遮盖 */
+html:not([data-theme='dark']) body::after {
+  opacity: 1;
+}
+
+/* 夜间模式：上层透明，露出下层夜间背景 */
+html[data-theme='dark'] body::after {
+  opacity: 0;
+}
+
+
+
 
 .footer-copyright{
     color: #2B4B40;

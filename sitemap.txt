@@ -1,4 +1,4 @@
-http://example.com/opt-images/dimensions.json
+http://example.com/2026/04/22/Hexo-butterfly%EF%BC%9A%E6%98%8E%E6%97%A5%E6%96%B9%E8%88%9F%E7%9C%8B%E6%9D%BF%E5%A8%98%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%95%99%E7%A8%8B/
 http://example.com/2026/04/19/hexo-butterfly%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F%E4%BF%AE%E5%A4%8D/
 http://example.com/2026/04/19/KMP%E7%AE%97%E6%B3%95%EF%BC%9Anext%E6%95%B0%E7%BB%84%E7%9A%84%E6%95%B0%E5%AD%A6%E6%8E%A8%E5%AF%BC/
 http://example.com/tags/index.html
@@ -8,5 +8,6 @@ http://example.com/tags/kmp%E7%AE%97%E6%B3%95/
 http://example.com/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA/
 http://example.com/tags/%E6%95%B0%E5%AD%A6/
 http://example.com/tags/hexo/
+http://example.com/tags/%E6%98%8E%E6%97%A5%E6%96%B9%E8%88%9F/
 http://example.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA/
 http://example.com/categories/hexo/

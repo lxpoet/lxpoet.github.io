@@ -2,9 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://example.com/opt-images/dimensions.json</loc>
+    <loc>http://example.com/2026/04/22/Hexo-butterfly%EF%BC%9A%E6%98%8E%E6%97%A5%E6%96%B9%E8%88%9F%E7%9C%8B%E6%9D%BF%E5%A8%98%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%95%99%E7%A8%8B/</loc>
     
-    <lastmod>2026-04-22</lastmod>
+    <lastmod>2026-04-23</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -78,6 +78,13 @@
   
   <url>
     <loc>http://example.com/tags/hexo/</loc>
+    <lastmod>2026-04-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/tags/%E6%98%8E%E6%97%A5%E6%96%B9%E8%88%9F/</loc>
     <lastmod>2026-04-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

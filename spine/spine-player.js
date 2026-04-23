@@ -4,7 +4,7 @@
 const spine_model_path = "/spine/models/";
 var MODELS = [ // 模型列表
     "build_char_4098_vvana_epoque_40",
-    "build_char_4224_turdus",
+    // "build_char_4224_turdus",
     // 可用模型列表
 ];
 var DEFAULT_ANIMATION = "Relax"; // 默认动画
